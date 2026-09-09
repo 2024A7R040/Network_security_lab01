@@ -1,0 +1,50 @@
+def caesar(text, shift):
+    ans = ""
+    for c in text:
+        if c.isalpha():
+            a = ord('A') if c.isupper() else ord('a')
+            ans += chr((ord(c) - a + shift) % 26 + a)
+        else:
+            ans += c
+    return ans
+
+
+def vigenere(text, key, decrypt=False):
+    ans = ""
+    i = 0
+
+    for c in text:
+        if c.isalpha():
+            a = ord('A') if c.isupper() else ord('a')
+            shift = ord(key[i % len(key)].lower()) - ord('a')
+
+            if decrypt:
+                shift = -shift
+
+            ans += chr((ord(c) - a + shift) % 26 + a)
+            i += 1
+        else:
+            ans += c
+
+    return ans
+
+
+# Caesar
+msg = "Hello Network Security"
+enc = caesar(msg, 3)
+
+print("--- Caesar ---")
+print("Original:", msg)
+print("Encrypted:", enc)
+print("Decrypted:", caesar(enc, -3))
+
+
+# Vigenere
+msg = "Network Security"
+key = "key"
+enc = vigenere(msg, key)
+
+print("\n--- Vigenere ---")
+print("Original:", msg)
+print("Encrypted:", enc)
+print("Decrypted:", vigenere(enc, key, True))
